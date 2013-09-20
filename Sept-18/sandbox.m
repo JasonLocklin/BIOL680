@@ -1,5 +1,7 @@
 %% load data
 % first, cd to where the data you just grabbed is located
+cd /home/jalockli/BIOL680/data
+
 [csc,csc_info] = LoadCSC('R016-2012-10-08-CSC02d.ncs');
 tvec = Range(csc);
 raw_LFP = Data(csc);
