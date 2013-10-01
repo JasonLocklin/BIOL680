@@ -3,7 +3,7 @@
 function navigate(src,evt)
     % Callback to parse keypress event data to adjust margins
     % Create figure environment with 
-    %   f = figure('KeyPressFcn', @(obj, evt) navigate(obj,evt) );
+    %   f = figure('KeyPressFcn', @navigate);
     %
     % While the figure is selected:
     % Up/Down arrow keys adjust axis width by 50%
