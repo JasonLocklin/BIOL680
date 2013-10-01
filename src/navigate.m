@@ -1,7 +1,14 @@
 % Function that allows for figure navigation
 
 function navigate(src,evt)
-% Callback to parse keypress event data to adjust margins
+    % Callback to parse keypress event data to adjust margins
+    % Create figure environment with 
+    %   f = figure('KeyPressFcn', @(obj, evt) navigate(obj,evt) );
+    %
+    % While the figure is selected:
+    % Up/Down arrow keys adjust axis width by 50%
+    % Left/Righ arrow keys shift axis by 50% of it's width
+    %
     axisHandle = get(src, 'Children');
     range = get(axisHandle, 'XLim');
     switch logical(true)
