@@ -63,6 +63,7 @@ f = figure('KeyPressFcn', @navigate);
 a = Data(S{1}); %start the plot range with a guess
 xrange = [a(1) a(2)];
 
+
 for yindex = 1:length(S)
     spikes = Data(S{yindex});
     for spikeindex = 1:length(spikes)
@@ -72,13 +73,13 @@ for yindex = 1:length(S)
             case spikeindex > xrange(2)
                 xrange(2) = spikes(spikeindex);
         end
-        text(spikes(spikeindex), yindex, '|', 'Color', [1 0 0]);
+        text(spikes(spikeindex), yindex, '|', 'Color', [0.5 0.5 0.5]);
     end
 end
-set(gca, 'XLim', xrange, 'YLim', [0 length(S)]);
-
-
-
+set(gca, 'XLim', [xrange(1) xrange(1)+2], 'YLim', [0 length(S)]);
+set(gca,'box','off','ycolor',[0.5 0.5 0.5])
+set(gca, 'ytick', [])
+set(gcf, 'Color', [0.5 0.5 0.5])
 
 
 
