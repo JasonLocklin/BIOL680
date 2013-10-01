@@ -60,26 +60,33 @@ sqr_fn(2)
 %if interactive:
 f = figure('KeyPressFcn', @navigate);
 
-a = Data(S{1}); %start the plot range with a guess
-xrange = [a(1) a(2)];
+spikes = [];
+yvalues = [];
 
-
+%Turn the data into two vectors (X and Y) for ploting.
 for yindex = 1:length(S)
-    spikes = Data(S{yindex});
-    for spikeindex = 1:length(spikes)
-        switch logical(true)
-            case spikes(spikeindex) < xrange(1)
-                xrange(1) = spikes(spikeindex);
-            case spikeindex > xrange(2)
-                xrange(2) = spikes(spikeindex);
-        end
-        text(spikes(spikeindex), yindex, '|', 'Color', [0.5 0.5 0.5]);
-    end
+    spikes = vertcat(spikes, Data(S{yindex}));
+    yvalues = vertcat(yvalues, ones(length(Data(S{yindex})),1)*yindex );
 end
-set(gca, 'XLim', [xrange(1) xrange(1)+2], 'YLim', [0 length(S)]);
-set(gca,'box','off','ycolor',[0.5 0.5 0.5])
-set(gca, 'ytick', [])
-set(gcf, 'Color', [0.5 0.5 0.5])
+
+% Scatterplot is very fast, but only has a small set of markers available
+% In another language, I would use |, but here, I'll just use a triangle.
+scatter(spikes, yvalues, '>');
+set(gca, 'XLim', [min(spikes) min(spikes)+2]);
+%set(gca,'box','off','ycolor',[0.5 0.5 0.5]);
+% set(gca, 'ytick', []);
+
+
+%LFPs
+hold on;
+
+%Calculate scaling factor for max range +-10
+cf = diff(minmax(Data(csc)))/20;
+bias = get(gca, 'YLim');
+bias = bias(2) + 10;
+
+set(gca, 'YLim', get(gca, 'YLim')+ [0 20]);
+pl = plot(Range(csc), (Data(csc)/cf)+bias );
 
 
 
