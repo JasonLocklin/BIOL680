@@ -148,23 +148,31 @@ Timestamps_s(end) - Timestamps_s(1)
 % Restricting data to rat running time
 run(FindFile('*keys.m'))
 
+% Use the first element of ExpKeys.TimeOnTrack and ExpKeys.TimeOffTrack 
+% to find the indices of Timestamps corresponding to the Value session. 
+
+[a RecordingStartIndex] = min(abs(Timestamps_s - ExpKeys.TimeOnTrack(1)))
+[a RecordingEndIndex] =   min(abs(Timestamps_s - ExpKeys.TimeOffTrack(1)))
 
 
+%Create a new set of variables on this restricted timeset
+TimestampsValue = Timestamps_s(RecordingStartIndex:RecordingEndIndex);
+SamplesValue    = Samples_V(1:512, RecordingStartIndex:RecordingEndIndex);
+NumberOfValidSamplesValue = NumberOfValidSamples(RecordingStartIndex:RecordingEndIndex);
+
+plot(diff(TimestampsValue))
 
 
+%What is the expected difference between 512-sample timestamps if Fs is 2kHz? 
+
+(1/2000) * 512
+
+TrueSamplingRate = 1/mode(diff(TimestampsValue))
 
 
+missingIndex = find( NumberOfValidSamplesValue < 512 );
 
-
-
-
-
-
-
-
-
-
-
+%Missing values are coded as numeric zero
 
 
 
