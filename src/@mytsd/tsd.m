@@ -1,7 +1,8 @@
-function tsa = tsd(t, qData, tUnits)
+function tsa = tsd(t, qData, header, tUnits)
 %
 % tsa = tsd(t,data)
-% tsa = tsd(t,data, units)  e.g. units = {'ts','sec', or 'ms'; assumes 'sec'}
+% tsa = tsd(t,data, header)
+% tsa = tsd(t,data, header, units)  e.g. units = {'ts','sec', or 'ms'; assumes 'sec'}
 %
 % tsd is a class of "timestamped arrays"
 % 	It includes a list of timestamps
@@ -13,12 +14,9 @@ function tsa = tsd(t, qData, tUnits)
 % Methods
 %    tsd/Range     - Timestamps used
 %    tsd/Data      - Returns the data component
-%    tsd/DT        - Returns the DT value (mean diff(timestamps))
-%    tsd/StartTime - First timestamp
-%    tsd/EndTime   - Last timestamp
+%    tsd/getHeader - Returns the header information
 %    tsd/Restrict  - Keep data within a certain range
-%    tsd/Mask      - Make all non-mask values NaN
-%    tsd/AntiMask  - Make all mask values NaN
+%    tsd/Plot      - Plot the data
 %
 %  Note: data can be N-dimensional, time is always the first axis.
 %
@@ -66,10 +64,19 @@ case 2
    tsa.t = t;
    tsa.data = qData;
    tsa.units= 'sec';
+   
 case 3
    tsa.t = t;
    tsa.data = qData;
+   tsa.header = header
+   tsa.units= 'sec';
+
+case 4
+   tsa.t = t;
+   tsa.data = qData;
+   tsa.header = header
    tsa.units= tUnits;   
+   
 otherwise
    error('Constructor error tsd');
 end
