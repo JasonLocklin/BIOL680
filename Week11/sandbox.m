@@ -20,7 +20,7 @@ Fs = 2000; dt = 1./Fs;
 cscD = locdetrend(cscD,Fs,[1 0.5]); % remove slow drifts in signal (this can mess up the STA)
 
 
-%% grab a LFP snippet for each spike and average
+%% grab a LFP snippet for each spike and average (SLOW!!!)
 w = [-1 1]; % time window to compute STA over
 tvec = w(1):dt:w(2); % time axis for STA
  
