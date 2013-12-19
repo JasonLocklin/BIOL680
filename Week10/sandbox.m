@@ -242,3 +242,33 @@ for iT = 1:size(p,1)
     drawnow; pause(0.1);
 end
 
+
+
+%% Export the results to a movie file
+
+goodOccInd = find(occ_binned > 0);
+h = figure; set(h,'Position',[100 100 320 240]);
+for iT = 1:size(p,1)
+    cla;
+    temp = reshape(p(iT,:),[SET_nxBins SET_nyBins]);
+    toPlot = nan(SET_nxBins,SET_nyBins);
+    toPlot(goodOccInd) = temp(goodOccInd);
+ 
+    pcolor(toPlot); axis xy; hold on; caxis([0 0.5]);
+    shading flat; axis off;
+ 
+    hold on; plot(yBinned(iT),xBinned(iT),'ow','MarkerSize',15);
+ 
+    h = title(sprintf('t %.2f, nCells %d',tvec(iT),nActiveNeurons(iT))); 
+    if nActiveNeurons(iT) == 0
+        set(h,'Color',[1 0 0]);
+    else
+        set(h,'Color',[0 0 0]);
+    end
+    f(iT) = getframe(gcf); % store current frame
+    drawnow;
+end
+
+fname = 'test2.avi';
+movie2avi(f,fname,'FPS',10);
+
